@@ -1,0 +1,79 @@
+body{
+  margin:0;
+  background:#f4f7fc;
+  font-family:Segoe UI,sans-serif;
+}
+
+.login-page{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(
+      135deg,
+      #1e3c72,
+      #2a5298
+  );
+}
+
+.login-card{
+  width:400px;
+  background:white;
+  border-radius:12px;
+  padding:30px;
+  box-shadow:0 4px 15px rgba(0,0,0,.2);
+}
+
+.app-layout{
+  display:flex;
+}
+
+.sidebar{
+  width:240px;
+  height:100vh;
+  background:#1e293b;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  padding:20px;
+}
+
+.sidebar a{
+  color:white;
+  text-decoration:none;
+  margin:12px 0;
+}
+
+.logo{
+  margin-bottom:30px;
+}
+
+.content{
+  flex:1;
+  padding:30px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+}
+
+.stat-card{
+  background:white;
+  padding:30px;
+  border-radius:12px;
+  font-size:22px;
+  font-weight:bold;
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+
+.logout-btn{
+  margin-top:auto;
+  border:none;
+  background:#ef4444;
+  color:white;
+  padding:10px;
+  border-radius:8px;
+}
