@@ -1,21 +1,16 @@
-import Navbar from "../components/Navbar";
+import MainLayout
+from "../layouts/MainLayout";
 
 export default function Commits() {
 
-  return (
+ return (
 
-    <div className="app-layout">
+ <MainLayout>
 
-      <Navbar />
+ <h1>
+  Commit Tracking
+ </h1>
 
-      <div className="content">
-
-        <h2>
-          Commit Tracking
-        </h2>
-
-      </div>
-
-    </div>
-  );
+ </MainLayout>
+ );
 }

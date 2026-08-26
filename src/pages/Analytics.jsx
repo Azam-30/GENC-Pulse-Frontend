@@ -1,22 +1,16 @@
-import Navbar from "../components/Navbar";
+import MainLayout
+from "../layouts/MainLayout";
 
 export default function Analytics() {
 
-  return (
+ return (
 
-    <div className="app-layout">
+ <MainLayout>
 
-      <Navbar />
+ <h1>
+  Analytics
+ </h1>
 
-      <div className="content">
-
-        <h2>
-          Analytics Dashboard
-        </h2>
-
-      </div>
-
-    </div>
-  );
+ </MainLayout>
+ );
 }
-``

@@ -1,44 +1,38 @@
-import Navbar from
-"../components/Navbar";
+import MainLayout
+from "../layouts/MainLayout";
 
 function Dashboard() {
 
-  return (
+ return (
 
-    <div className="app-layout">
+ <MainLayout>
 
-      <Navbar />
+  <h1>
+   Dashboard
+  </h1>
 
-      <div className="content">
+  <div className="cards">
 
-        <h2>
-          Dashboard
-        </h2>
+   <div className="card-item">
+    Employees
+   </div>
 
-        <div className="cards">
+   <div className="card-item">
+    Progress
+   </div>
 
-          <div className="stat-card">
-            Employees
-          </div>
+   <div className="card-item">
+    Commits
+   </div>
 
-          <div className="stat-card">
-            Progress
-          </div>
+   <div className="card-item">
+    Analytics
+   </div>
 
-          <div className="stat-card">
-            Commits
-          </div>
+  </div>
 
-          <div className="stat-card">
-            Analytics
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-  );
+ </MainLayout>
+ );
 }
 
 export default Dashboard;

@@ -4,6 +4,8 @@ import {
   Route,
 } from "react-router-dom";
 
+import { ToastContainer } from "react-toastify";
+
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Employees from "./pages/Employees";
@@ -12,12 +14,13 @@ import Commits from "./pages/Commits";
 import Analytics from "./pages/Analytics";
 
 import ProtectedRoute from "./components/ProtectedRoute";
+import RoleProtectedRoute from "./components/RoleProtectedRoute";
 
 function App() {
-
   return (
-
     <BrowserRouter>
+
+      <ToastContainer />
 
       <Routes>
 
@@ -38,36 +41,57 @@ function App() {
         <Route
           path="/employees"
           element={
-            <ProtectedRoute>
+            <RoleProtectedRoute
+              allowedRoles={[
+                "ADMIN",
+              ]}
+            >
               <Employees />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
 
         <Route
           path="/progress"
           element={
-            <ProtectedRoute>
+            <RoleProtectedRoute
+              allowedRoles={[
+                "ADMIN",
+                "MANAGER",
+                "EMPLOYEE",
+              ]}
+            >
               <Progress />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
 
         <Route
           path="/commits"
           element={
-            <ProtectedRoute>
+            <RoleProtectedRoute
+              allowedRoles={[
+                "ADMIN",
+                "MANAGER",
+                "EMPLOYEE",
+              ]}
+            >
               <Commits />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
 
         <Route
           path="/analytics"
           element={
-            <ProtectedRoute>
+            <RoleProtectedRoute
+              allowedRoles={[
+                "ADMIN",
+                "MANAGER",
+              ]}
+            >
               <Analytics />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
 

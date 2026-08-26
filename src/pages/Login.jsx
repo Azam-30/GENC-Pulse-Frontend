@@ -1,105 +1,151 @@
 import { useState } from "react";
-
-import { useNavigate }
-from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
-  loginUser,
-}
-from "../services/authService";
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
+
+import { loginUser } from "../services/authService";
 
 function Login() {
+  const navigate = useNavigate();
 
-  const navigate =
-    useNavigate();
+  const [username, setUsername] =
+    useState("");
 
-  const [username,
-    setUsername]
-    = useState("");
+  const [password, setPassword] =
+    useState("");
 
-  const [password,
-    setPassword]
-    = useState("");
+  const [showPassword,
+    setShowPassword] =
+    useState(false);
 
-  const handleSubmit =
-    async (e) => {
+  const [loading,
+    setLoading] =
+    useState(false);
 
-      e.preventDefault();
+  const submit = async (e) => {
+    e.preventDefault();
 
-      try {
+    try {
+      setLoading(true);
 
-        const response =
-          await loginUser({
-            username,
-            password,
-          });
+      const response =
+        await loginUser({
+          username,
+          password,
+        });
 
-        localStorage.setItem(
-          "token",
-          response.data.token
-        );
+      localStorage.setItem(
+        "token",
+        response.data.token
+      );
 
-        localStorage.setItem(
-          "role",
-          response.data.role
-        );
+      localStorage.setItem(
+        "role",
+        response.data.role
+      );
 
-        navigate("/dashboard");
+      localStorage.setItem(
+        "username",
+        response.data.username
+      );
 
-      } catch {
+      toast.success(
+        "Login Successful"
+      );
 
-        alert("Login Failed");
-      }
-    };
+      navigate("/dashboard");
+
+    } catch (error) {
+
+      toast.error(
+        "Login Failed"
+      );
+
+    } finally {
+
+      setLoading(false);
+
+    }
+  };
 
   return (
+    <div className="login-container">
 
-    <div className="login-page">
+      <div className="login-box">
 
-      <div className="login-card">
-
-        <h2>
+        <h2 className="text-center mb-3">
           GenC Pulse
         </h2>
 
-        <p>
-          Employee Productivity Tracker
+        <p className="text-center text-muted mb-4">
+          Employee Progress Tracking System
         </p>
 
-        <form
-          onSubmit={
-            handleSubmit
-          }
-        >
+        <form onSubmit={submit}>
 
-          <input
-            type="text"
-            placeholder="Username"
-            className="form-control mb-3"
-            value={username}
-            onChange={(e) =>
-              setUsername(
-                e.target.value
-              )
-            }
-          />
+          <div className="mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Username"
+              value={username}
+              onChange={(e) =>
+                setUsername(
+                  e.target.value
+                )
+              }
+              required
+            />
+          </div>
 
-          <input
-            type="password"
-            placeholder="Password"
-            className="form-control mb-3"
-            value={password}
-            onChange={(e) =>
-              setPassword(
-                e.target.value
-              )
-            }
-          />
+          <div className="mb-3 position-relative">
+
+            <input
+              type={
+                showPassword
+                  ? "text"
+                  : "password"
+              }
+              className="form-control"
+              placeholder="Password"
+              value={password}
+              onChange={(e) =>
+                setPassword(
+                  e.target.value
+                )
+              }
+              required
+            />
+
+            <button
+              type="button"
+              className="password-toggle-btn"
+              onClick={() =>
+                setShowPassword(
+                  !showPassword
+                )
+              }
+            >
+              {showPassword ? (
+                <FaEyeSlash />
+              ) : (
+                <FaEye />
+              )}
+            </button>
+
+          </div>
 
           <button
+            type="submit"
             className="btn btn-primary w-100"
+            disabled={loading}
           >
-            Login
+            {loading
+              ? "Signing In..."
+              : "Login"}
           </button>
 
         </form>
