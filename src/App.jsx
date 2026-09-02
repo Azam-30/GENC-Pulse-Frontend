@@ -12,7 +12,7 @@ import Employees from "./pages/Employees";
 import Progress from "./pages/Progress";
 import Commits from "./pages/Commits";
 import Analytics from "./pages/Analytics";
-
+import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import RoleProtectedRoute from "./components/RoleProtectedRoute";
 
@@ -37,6 +37,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+  path="/profile"
+  element={
+    <ProtectedRoute>
+      <Profile />
+    </ProtectedRoute>
+  }
+/>
 
         <Route
           path="/employees"

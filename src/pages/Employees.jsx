@@ -11,6 +11,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 
 import {
   getEmployees,
+  getManagers,
   createEmployee,
   updateEmployee,
   deleteEmployee,
@@ -18,6 +19,8 @@ import {
 
 function Employees() {
   const [employees, setEmployees] = useState([]);
+  const [managerList, setManagerList] =
+  useState([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -36,19 +39,24 @@ function Employees() {
     employeeCode: "",
     name: "",
     email: "",
+    username: "",
+
+password: "",
     designation: "",
     technology: "",
     batch: "",
     location: "",
     role: "EMPLOYEE",
-    managerName: "",
+    managerId: "",
+managerName: "",
     projectName: "",
     active: true,
   });
 
   useEffect(() => {
-    loadEmployees();
-  }, []);
+  loadEmployees();
+  loadManagers();
+}, []);
 
   const loadEmployees = async () => {
     try {
@@ -66,6 +74,24 @@ function Employees() {
       setLoading(false);
     }
   };
+  const loadManagers = async () => {
+  try {
+
+    const response =
+      await getManagers();
+
+    setManagerList(
+      response.data || []
+    );
+
+  } catch {
+
+    toast.error(
+      "Unable to load managers"
+    );
+
+  }
+};
 
   const totalEmployees =
     employees.length;
@@ -80,11 +106,12 @@ function Employees() {
       (emp) => !emp.active
     ).length;
 
-  const managers =
-    employees.filter(
-      (emp) =>
-       emp.role?.toUpperCase() === "MANAGER"
-    ).length;
+const managerCount =
+  employees.filter(
+    (emp) =>
+      emp.role?.toUpperCase() ===
+      "MANAGER"
+  ).length;
 
   const resetForm = () => {
     setEditingId(null);
@@ -93,73 +120,95 @@ function Employees() {
       employeeCode: "",
       name: "",
       email: "",
+      username: "",
+
+password: "",
       designation: "",
       technology: "",
       batch: "",
       location: "",
       role: "EMPLOYEE",
-      managerName: "",
+      managerId: "",
+managerName: "",
       projectName: "",
       active: true,
     });
   };
 
-  const handleInputChange = (e) => {
-    const value =
-      e.target.name === "active"
-        ? e.target.value === "true"
-        : e.target.value;
+const handleInputChange = (e) => {
 
-    setForm({
-      ...form,
-      [e.target.name]: value,
-    });
-  };
+  let value = e.target.value;
+
+  if (e.target.name === "active") {
+    value = value === "true";
+  }
+
+  if (e.target.name === "managerId") {
+    value = value
+      ? Number(value)
+      : null;
+  }
+
+  setForm({
+    ...form,
+    [e.target.name]: value,
+  });
+
+};
+
 
   const handleView = (employee) => {
     setSelectedEmployee(employee);
   };
 
-  const handleEdit = (employee) => {
-    setSelectedEmployee(employee);
+const handleEdit = (employee) => {
+  setSelectedEmployee(employee);
 
-    setEditingId(employee.id);
+  setEditingId(employee.id);
 
-    setForm({
-      employeeCode:
-        employee.employeeCode || "",
+  setForm({
+    employeeCode:
+      employee.employeeCode || "",
 
-      name:
-        employee.name || "",
+    name:
+      employee.name || "",
 
-      email:
-        employee.email || "",
+    email:
+      employee.email || "",
 
-      designation:
-        employee.designation || "",
+    username:
+      employee.username || "",
 
-      technology:
-        employee.technology || "",
+    password: "",
 
-      batch:
-        employee.batch || "",
+    designation:
+      employee.designation || "",
 
-      location:
-        employee.location || "",
+    technology:
+      employee.technology || "",
 
-      role:
-        employee.role || "EMPLOYEE",
+    batch:
+      employee.batch || "",
 
-      managerName:
-        employee.managerName || "",
+    location:
+      employee.location || "",
 
-      projectName:
-        employee.projectName || "",
+    role:
+      employee.role || "EMPLOYEE",
 
-      active:
-        employee.active ?? true,
-    });
-  };
+    managerId:
+  employee.managerId || "",
+
+managerName:
+  employee.managerName || "",
+
+    projectName:
+      employee.projectName || "",
+
+    active:
+      employee.active ?? true,
+  });
+};
 
   const openDeleteModal = (
     employee
@@ -195,6 +244,8 @@ function Employees() {
       resetForm();
 
       await loadEmployees();
+
+      await loadManagers();
 
       const modal =
         document.getElementById(
@@ -346,7 +397,8 @@ function Employees() {
         </div>
 
         <div className="stat-card purple">
-          <h3>{managers}</h3>
+          <h3>{managerCount}</h3>
+
           <p>Managers</p>
         </div>
       </div>
@@ -405,13 +457,14 @@ function Employees() {
       </div>
 
 {role === "ADMIN" && (
-  <EmployeeModal
-    form={form}
-    handleInputChange={handleInputChange}
-    handleSubmit={handleSubmit}
-    editing={editingId}
-    saving={saving}
-  />
+<EmployeeModal
+  form={form}
+  managers={managerList}
+  handleInputChange={handleInputChange}
+  handleSubmit={handleSubmit}
+  editing={editingId}
+  saving={saving}
+/>
 )}
 
       <ViewEmployeeModal

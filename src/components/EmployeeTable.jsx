@@ -18,21 +18,22 @@ function EmployeeTable({
     <div className="table-responsive">
       <table className="table employee-table align-middle">
         <thead>
-          <tr>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Designation</th>
-            <th>Technology</th>
-            <th>Project</th>
-            <th>Status</th>
-            <th width="220">Actions</th>
-          </tr>
+<tr>
+  <th>Code</th>
+  <th>Name</th>
+  <th>Designation</th>
+  <th>Manager</th>
+  <th>Technology</th>
+  <th>Project</th>
+  <th>Status</th>
+  <th width="220">Actions</th>
+</tr>
         </thead>
 
         <tbody>
           {employees.length === 0 ? (
             <tr>
-              <td colSpan="7" className="text-center p-4">
+              <td colSpan="8" className="text-center p-4">
                 No employees found
               </td>
             </tr>
@@ -52,6 +53,10 @@ function EmployeeTable({
                 <td>
                   {employee.designation || "-"}
                 </td>
+
+                <td>
+  {employee.managerName || "-"}
+</td>
 
                 <td>
                   {employee.technology || "-"}

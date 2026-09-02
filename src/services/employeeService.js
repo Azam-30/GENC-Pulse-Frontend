@@ -1,17 +1,42 @@
 import api from "../api/axiosConfig";
 
 export const getEmployees = async () => {
-  const response = await api.get("/api/employees");
+  const response = await api.get(
+    "/api/employees"
+  );
+
   return response.data;
 };
 
-export const getEmployeeById = async (id) => {
+export const getEmployeeById = async (
+  id
+) => {
+
   const response = await api.get(
     `/api/employees/${id}`
   );
 
   return response.data;
 };
+
+export const getManagers = async () => {
+
+  const response = await api.get(
+    "/api/employees/managers"
+  );
+
+  return response.data;
+};
+
+export const getEmployeesByManagerId =
+  async (managerId) => {
+
+    const response = await api.get(
+      `/api/employees/manager/${managerId}`
+    );
+
+    return response.data;
+  };
 
 export const createEmployee = async (
   employee

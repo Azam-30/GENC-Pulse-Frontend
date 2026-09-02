@@ -49,6 +49,11 @@ function ViewEmployeeModal({
                 </p>
 
                 <p>
+  <strong>Username:</strong>{" "}
+  {employee.username}
+</p>
+
+                <p>
                   <strong>Designation:</strong>
                   {" "}
                   {employee.designation || "-"}
@@ -96,11 +101,15 @@ function ViewEmployeeModal({
 
             <hr />
 
-            <p>
-              <strong>Manager Name:</strong>
-              {" "}
-              {employee.managerName || "-"}
-            </p>
+<p>
+  <strong>Manager ID:</strong>{" "}
+  {employee.managerId || "-"}
+</p>
+
+<p>
+  <strong>Manager Name:</strong>{" "}
+  {employee.managerName || "-"}
+</p>
 
             <p>
               <strong>Project Name:</strong>

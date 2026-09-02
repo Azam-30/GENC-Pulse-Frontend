@@ -12,7 +12,7 @@ import {
   FaHome,
   FaSignOutAlt,
 } from "react-icons/fa";
-
+import { FaUserCircle } from "react-icons/fa";
 function Sidebar() {
 
   const navigate =
@@ -50,9 +50,18 @@ function Sidebar() {
           "/dashboard"
         )}
       >
+
         <FaHome />
         Dashboard
       </Link>
+
+      <Link
+  to="/profile"
+  className={active("/profile")}
+>
+  <FaUserCircle />
+  My Profile
+</Link>
 
       {role === "ADMIN" && (
         <Link

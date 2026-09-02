@@ -4,6 +4,7 @@ function EmployeeModal({
   handleSubmit,
   editing,
   saving,
+  managers,
 }) {
   return (
     <div
@@ -79,6 +80,36 @@ function EmployeeModal({
                     required
                   />
                 </div>
+
+                <div className="col-md-6 mb-3">
+  <label className="form-label">
+    Username
+  </label>
+
+  <input
+    type="text"
+    className="form-control"
+    name="username"
+    value={form.username}
+    onChange={handleInputChange}
+    required
+  />
+</div>
+
+<div className="col-md-6 mb-3">
+  <label className="form-label">
+    Temporary Password
+  </label>
+
+  <input
+    type="password"
+    className="form-control"
+    name="password"
+    value={form.password}
+    onChange={handleInputChange}
+    required
+  />
+</div>
 
                 <div className="col-md-6 mb-3">
                   <label className="form-label">
@@ -188,19 +219,31 @@ function EmployeeModal({
                   />
                 </div>
 
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">
-                    Reporting Manager
-                  </label>
+<div className="col-md-6 mb-3">
+  <label className="form-label">
+    Reporting Manager
+  </label>
 
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="managerName"
-                    value={form.managerName}
-                    onChange={handleInputChange}
-                  />
-                </div>
+  <select
+    className="form-control"
+    name="managerId"
+    value={form.managerId || ""}
+    onChange={handleInputChange}
+  >
+    <option value="">
+      Select Manager
+    </option>
+
+    {managers?.map((manager) => (
+      <option
+        key={manager.id}
+        value={manager.id}
+      >
+        {manager.name}
+      </option>
+    ))}
+  </select>
+</div>
 
                 <div className="col-md-6 mb-3">
                   <label className="form-label">

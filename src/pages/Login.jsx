@@ -52,6 +52,11 @@ function Login() {
         response.data.username
       );
 
+      localStorage.setItem(
+  "employeeId",
+  response.data.employeeId
+);
+
       toast.success(
         "Login Successful"
       );
