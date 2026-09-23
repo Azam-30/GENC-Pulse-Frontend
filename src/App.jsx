@@ -73,7 +73,10 @@ function App() {
             </RoleProtectedRoute>
           }
         />
-
+<Route
+  path="/commits"
+  element={<Commits />}
+/>
         <Route
           path="/commits"
           element={

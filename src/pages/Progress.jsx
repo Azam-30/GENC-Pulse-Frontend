@@ -8,6 +8,7 @@ import ProgressModal from "../components/ProgressModal";
 import {
   getAllProgress,
   getProgressByEmployeeId,
+  getProgressByManagerId,
   createProgress,
 } from "../services/progressService";
 
@@ -54,19 +55,29 @@ export default function Progress() {
 
       let response;
 
-      if (role === "EMPLOYEE") {
+if (role === "EMPLOYEE") {
 
-        response =
-          await getProgressByEmployeeId(
-            employeeId
-          );
+  response =
+    await getProgressByEmployeeId(
+      employeeId
+    );
 
-      } else {
+} else if (
+  role === "MANAGER" &&
+  employeeId
+) {
 
-        response =
-          await getAllProgress();
+  response =
+    await getProgressByManagerId(
+      employeeId
+    );
 
-      }
+} else {
+
+  response =
+    await getAllProgress();
+
+}
 
       setProgressList(response);
 
@@ -149,81 +160,162 @@ export default function Progress() {
           <LoadingSpinner />
         ) : (
 
-          <table className="table">
+<table className="table table-hover align-middle">
 
-            <thead>
+  <thead>
 
-              <tr>
+    <tr>
 
-                {(role !==
-                  "EMPLOYEE") && (
-                  <th>
-                    Employee Id
-                  </th>
+      {role !== "EMPLOYEE" && (
+        <th>Employee</th>
+      )}
+
+      <th>Task Details</th>
+
+      <th>Hours</th>
+
+      <th>Status</th>
+
+      <th>Blockers</th>
+
+      <th>Date</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    {progressList.length === 0 ? (
+
+      <tr>
+        <td
+          colSpan={
+            role !== "EMPLOYEE"
+              ? 6
+              : 5
+          }
+          className="text-center py-4"
+        >
+          No progress records found
+        </td>
+      </tr>
+
+    ) : (
+
+      progressList.map((item) => (
+
+        <tr key={item.id}>
+
+          {role !== "EMPLOYEE" && (
+
+            <td>
+
+              <div>
+
+                <strong>
+                  {item.employeeName || "-"}
+                </strong>
+
+                <br />
+
+                <small className="text-muted">
+                  {item.employeeCode || "-"}
+                </small>
+
+              </div>
+
+            </td>
+
+          )}
+
+          <td>
+
+            <div>
+
+              <strong>
+                {item.taskDescription}
+              </strong>
+
+              <br />
+
+              <small className="text-muted">
+
+                Story ID:
+                {" "}
+                {item.storyId || "-"}
+
+              </small>
+
+            </div>
+
+          </td>
+
+          <td>
+
+            <span className="fw-semibold">
+              {item.hoursWorked}
+            </span>
+
+          </td>
+
+          <td>
+
+            <span
+              className={
+                item.status === "COMPLETED"
+                  ? "badge bg-success"
+                  : item.status === "BLOCKED"
+                  ? "badge bg-danger"
+                  : "badge bg-warning text-dark"
+              }
+            >
+
+              {item.status
+                ?.replaceAll(
+                  "_",
+                  " "
                 )}
 
-                <th>Story Id</th>
+            </span>
 
-                <th>Task</th>
+          </td>
 
-                <th>Hours</th>
+          <td>
 
-                <th>Status</th>
+            {item.blockers &&
+            item.blockers !== "None" &&
+            item.blockers !== "nothing" ? (
 
-                <th>Date</th>
+              <span className="text-danger fw-semibold">
+                {item.blockers}
+              </span>
 
-              </tr>
+            ) : (
 
-            </thead>
+              <span className="text-success">
+                No Blockers
+              </span>
 
-            <tbody>
+            )}
 
-              {progressList.map(
-                (item) => (
+          </td>
 
-                <tr key={item.id}>
+          <td>
 
-                  {(role !==
-                    "EMPLOYEE") && (
-                    <td>
-                      {
-                        item.employeeId
-                      }
-                    </td>
-                  )}
+            {item.updateDate}
 
-                  <td>
-                    {item.storyId}
-                  </td>
+          </td>
 
-                  <td>
-                    {
-                      item.taskDescription
-                    }
-                  </td>
+        </tr>
 
-                  <td>
-                    {
-                      item.hoursWorked
-                    }
-                  </td>
+      ))
 
-                  <td>
-                    {item.status}
-                  </td>
+    )}
 
-                  <td>
-                    {
-                      item.updateDate
-                    }
-                  </td>
+  </tbody>
 
-                </tr>
-
-              ))}
-            </tbody>
-
-          </table>
+</table>
 
         )}
 

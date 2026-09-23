@@ -28,3 +28,13 @@ export const createProgress =
 
     return response.data;
   };
+
+export const getProgressByManagerId =
+  async (managerId) => {
+
+    const response = await api.get(
+      `/api/progress/manager/${managerId}`
+    );
+
+    return response.data;
+  };
