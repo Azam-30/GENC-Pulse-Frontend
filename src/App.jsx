@@ -1,114 +1,44 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
-
-import { ToastContainer } from "react-toastify";
-
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import Employees from "./pages/Employees";
-import Progress from "./pages/Progress";
-import Commits from "./pages/Commits";
-import Analytics from "./pages/Analytics";
-import Profile from "./pages/Profile";
-import ProtectedRoute from "./components/ProtectedRoute";
-import RoleProtectedRoute from "./components/RoleProtectedRoute";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './pages/Login';
+import EmployeeDashboard from './pages/EmployeeDashboard';
+import ManagerDashboard from './pages/ManagerDashboard';
+import AdminDashboard from './pages/AdminDashboard';
+import ProtectedRoute from './components/ProtectedRoute';
+import './App.css';
 
 function App() {
   return (
-    <BrowserRouter>
-
-      <ToastContainer />
-
+    <Router>
       <Routes>
-
-        <Route
-          path="/"
-          element={<Login />}
-        />
-
-        <Route
-          path="/dashboard"
+        <Route path="/login" element={<Login />} />
+        <Route 
+          path="/employee-dashboard" 
           element={
-            <ProtectedRoute>
-              <Dashboard />
+            <ProtectedRoute requiredRole="EMPLOYEE">
+              <EmployeeDashboard />
             </ProtectedRoute>
-          }
+          } 
         />
-        <Route
-  path="/profile"
-  element={
-    <ProtectedRoute>
-      <Profile />
-    </ProtectedRoute>
-  }
-/>
-
-        <Route
-          path="/employees"
+        <Route 
+          path="/manager-dashboard" 
           element={
-            <RoleProtectedRoute
-              allowedRoles={[
-                "ADMIN",
-              ]}
-            >
-              <Employees />
-            </RoleProtectedRoute>
-          }
+            <ProtectedRoute requiredRole="MANAGER">
+              <ManagerDashboard />
+            </ProtectedRoute>
+          } 
         />
-
-        <Route
-          path="/progress"
+        <Route 
+          path="/admin-dashboard" 
           element={
-            <RoleProtectedRoute
-              allowedRoles={[
-                "ADMIN",
-                "MANAGER",
-                "EMPLOYEE",
-              ]}
-            >
-              <Progress />
-            </RoleProtectedRoute>
-          }
+            <ProtectedRoute requiredRole="ADMIN">
+              <AdminDashboard />
+            </ProtectedRoute>
+          } 
         />
-<Route
-  path="/commits"
-  element={<Commits />}
-/>
-        <Route
-          path="/commits"
-          element={
-            <RoleProtectedRoute
-              allowedRoles={[
-                "ADMIN",
-                "MANAGER",
-                "EMPLOYEE",
-              ]}
-            >
-              <Commits />
-            </RoleProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/analytics"
-          element={
-            <RoleProtectedRoute
-              allowedRoles={[
-                "ADMIN",
-                "MANAGER",
-              ]}
-            >
-              <Analytics />
-            </RoleProtectedRoute>
-          }
-        />
-
+        <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
-
-    </BrowserRouter>
+    </Router>
   );
 }
 

@@ -1,164 +1,90 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import {
-  FaEye,
-  FaEyeSlash,
-} from "react-icons/fa";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { authAPI } from '../services/api';
+import './Login.css';
 
-import { loginUser } from "../services/authService";
-
-function Login() {
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const [username, setUsername] =
-    useState("");
-
-  const [password, setPassword] =
-    useState("");
-
-  const [showPassword,
-    setShowPassword] =
-    useState(false);
-
-  const [loading,
-    setLoading] =
-    useState(false);
-
-  const submit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
 
     try {
-      setLoading(true);
+      const response = await authAPI.login(email, password);
+      const { token, id, name, role } = response.data;
 
-      const response =
-        await loginUser({
-          username,
-          password,
-        });
+      localStorage.setItem('token', token);
+      localStorage.setItem('userId', id);
+      localStorage.setItem('userName', name);
+      localStorage.setItem('role', role);
 
-      localStorage.setItem(
-        "token",
-        response.data.token
-      );
-
-      localStorage.setItem(
-        "role",
-        response.data.role
-      );
-
-      localStorage.setItem(
-        "username",
-        response.data.username
-      );
-
-      localStorage.setItem(
-  "employeeId",
-  response.data.employeeId
-);
-
-      toast.success(
-        "Login Successful"
-      );
-
-      navigate("/dashboard");
-
-    } catch (error) {
-
-      toast.error(
-        "Login Failed"
-      );
-
+      if (role === 'EMPLOYEE') {
+        navigate('/employee-dashboard');
+      } else if (role === 'MANAGER') {
+        navigate('/manager-dashboard');
+      } else if (role === 'ADMIN') {
+        navigate('/admin-dashboard');
+      }
+    } catch (err) {
+      setError(err.response?.data?.error || 'Login failed. Please try again.');
     } finally {
-
       setLoading(false);
-
     }
   };
 
   return (
     <div className="login-container">
-
       <div className="login-box">
-
-        <h2 className="text-center mb-3">
-          GenC Pulse
-        </h2>
-
-        <p className="text-center text-muted mb-4">
-          Employee Progress Tracking System
-        </p>
-
-        <form onSubmit={submit}>
-
-          <div className="mb-3">
+        <h1>GENC Pulse</h1>
+        <p className="subtitle">Daily Status & Commit Tracking System</p>
+        
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
-              type="text"
-              className="form-control"
-              placeholder="Username"
-              value={username}
-              onChange={(e) =>
-                setUsername(
-                  e.target.value
-                )
-              }
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
               required
             />
           </div>
 
-          <div className="mb-3 position-relative">
-
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
             <input
-              type={
-                showPassword
-                  ? "text"
-                  : "password"
-              }
-              className="form-control"
-              placeholder="Password"
+              id="password"
+              type="password"
               value={password}
-              onChange={(e) =>
-                setPassword(
-                  e.target.value
-                )
-              }
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
               required
             />
-
-            <button
-              type="button"
-              className="password-toggle-btn"
-              onClick={() =>
-                setShowPassword(
-                  !showPassword
-                )
-              }
-            >
-              {showPassword ? (
-                <FaEyeSlash />
-              ) : (
-                <FaEye />
-              )}
-            </button>
-
           </div>
 
-          <button
-            type="submit"
-            className="btn btn-primary w-100"
-            disabled={loading}
-          >
-            {loading
-              ? "Signing In..."
-              : "Login"}
-          </button>
+          {error && <div className="error-message">{error}</div>}
 
+          <button type="submit" disabled={loading} className="login-btn">
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
         </form>
 
+        <div className="demo-credentials">
+          <p><strong>Demo Credentials:</strong></p>
+          <p>Employee: emp@genc.com / password</p>
+          <p>Manager: mgr@genc.com / password</p>
+          <p>Admin: admin@genc.com / password</p>
+        </div>
       </div>
-
     </div>
   );
-}
+};
 
 export default Login;
