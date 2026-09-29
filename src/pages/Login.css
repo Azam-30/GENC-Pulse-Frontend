@@ -1,0 +1,480 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #f0f7ff 0%, #edf3ff 100%);
+}
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(circle at top, rgba(59,130,246,0.12), transparent 30%), #f8fbff;
+}
+
+.login-box {
+  width: min(480px, 100%);
+  padding: 32px 28px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #dfe9f6;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+  border-radius: 24px;
+  backdrop-filter: blur(6px);
+}
+
+.login-box h1 {
+  margin: 0 0 0.5rem;
+  text-align: center;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: #0f172a;
+}
+
+.subtitle {
+  margin: 0 0 1.5rem;
+  text-align: center;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.form-group {
+  margin-bottom: 1.1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.form-group input,
+.form-group select,
+textarea {
+  width: 100%;
+  border: 1px solid #d4def0;
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  background: #ffffff;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59,130,246,0.12);
+}
+
+.login-btn,
+.submit-btn,
+.toggle-btn,
+.view-btn,
+.ack-btn,
+.logout-btn {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-btn,
+.submit-btn {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  box-shadow: 0 10px 18px rgba(37,99,235,0.25);
+}
+
+.toggle-btn,
+.view-btn,
+.ack-btn {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+.logout-btn {
+  background: rgba(255,255,255,0.08);
+  color: white;
+  width: auto;
+  padding: 0.7rem 1rem;
+}
+
+.demo-credentials {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.error-message {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.employee-dashboard,
+.manager-dashboard,
+.admin-dashboard {
+  min-height: 100vh;
+  background: #f3f7fb;
+}
+
+.dashboard-header {
+  background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
+  color: white;
+  padding: 1.25rem 2rem;
+  box-shadow: 0 12px 24px rgba(15,23,42,0.08);
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-weight: 600;
+}
+
+.dashboard-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+
+.summary-section {
+  margin-bottom: 1.5rem;
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.summary-card,
+.info-card,
+.manager-card{
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 1.2rem;
+  box-shadow: 0 10px 24px rgba(15,23,42,0.05);
+}
+
+.summary-card h3,
+.info-card h3,
+.manager-card h3 {
+  margin: 0 0 0.8rem;
+  font-size: 0.92rem;
+  color: #64748b;
+}
+
+.card-value,
+.info-value {
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.summary-card.submitted {
+  background: linear-gradient(135deg, #ecfdf5, #dcfce7);
+}
+
+.summary-card.pending {
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+}
+
+.summary-card.rate {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.dashboard-card,
+.admin-section {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 1.25rem;
+  box-shadow: 0 10px 24px rgba(15,23,42,0.05);
+}
+
+.status-card,
+.notifications-card,
+.team-card,
+.alerts-card {
+  grid-column: span 6;
+}
+
+.stats-card {
+  grid-column: span 6;
+}
+
+.dashboard-card h2,
+.admin-section h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+textarea {
+  width: 100%;
+  min-height: 160px;
+  border-radius: 12px;
+  border: 1px solid #d4def0;
+  padding: 0.9rem 1rem;
+  resize: vertical;
+}
+
+.submit-btn {
+  margin-top: 1rem;
+}
+
+.message {
+  margin-top: 1rem;
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  font-weight: 600;
+}
+
+.message.success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.message.error {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.notifications-list,
+.alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.notification-item,
+.alert-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-left: 5px solid #3b82f6;
+  border-radius: 12px;
+  background: #f8fbff;
+}
+
+.notification-item.CONSECUTIVE_MISS,
+.alert-item.CONSECUTIVE_MISS {
+  border-left-color: #dc2626;
+}
+
+.notif-message,
+.alert-message {
+  margin: 0 0 0.2rem;
+  font-weight: 600;
+}
+
+.acknowledge-btn,
+.ack-btn {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  width: auto;
+  padding: 0.6rem 0.9rem;
+}
+
+.team-table-container {
+  overflow-x: auto;
+}
+
+.team-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.team-table th,
+.team-table td {
+  padding: 0.9rem 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+.team-table th {
+  color: #64748b;
+  background: #f8fafc;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+
+.status {
+  display: inline-flex;
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+.status.submitted {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.modal-content {
+  position: relative;
+  width: min(520px, 100%);
+  background: white;
+  border-radius: 18px;
+  padding: 1.5rem;
+  box-shadow: 0 18px 40px rgba(15,23,42,0.18);
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #eff6ff;
+  color: #0f172a;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.admin-section {
+  margin-bottom: 1.25rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.register-form-container {
+  padding: 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.managers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.role-badge.manager {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.role-badge.admin {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.status-operational {
+  color: #16a34a;
+}
+
+@media (max-width: 720px) {
+  .summary-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .status-card,
+  .notifications-card,
+  .team-card,
+  .alerts-card,
+  .stats-card {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .header-content,
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .summary-cards,
+  .info-grid,
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-main {
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+  }
+}
